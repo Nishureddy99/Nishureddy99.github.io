@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nithish Reddy Bhoomannagari - XR Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #60a5fa;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --border-color: #e5e7eb;
+            --success-color: #10b981;
+            --research-color: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .header .subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .header .skills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background-color: var(--bg-secondary);
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .about-text strong {
+            color: var(--text-primary);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 80px 0;
+            background-color: var(--bg-primary);
+        }
+
+        .projects h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 60px;
+        }
+
+        .project {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .project:nth-child(even) {
+            direction: rtl;
+        }
+
+        .project:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .project-video {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-video iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .project-info h3 {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .tech-tag {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-tag {
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .status-completed {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .status-research {
+            background-color: var(--research-color);
+            color: white;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-highlights {
+            list-style: none;
+        }
+
+        .project-highlights li {
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .project-highlights li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Research Section */
+        .research-section {
+            padding: 80px 0;
+            background-color: var(--bg-secondary);
+        }
+
+        .research-section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .section-intro {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 4rem auto;
+            line-height: 1.6;
+        }
+
+        .research-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .research-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+        }
+
+        .research-card h3 {
+            color: var(--text-primary);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-icon {
+            background: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .research-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .metric strong {
+            color: var(--primary-color);
+        }
+
+        /* Architecture Diagram */
+        .architecture {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        .architecture h3 {
+            text-align: center;
+            color: var(--text-primary);
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .system-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .system {
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+        }
+
+        .system.current {
+            border-color: var(--success-color);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .system.planned {
+            border-color: var(--research-color);
+            background: rgba(245, 158, 11, 0.05);
+        }
+
+        .system h4 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .system-tag {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .tag-current {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .tag-planned {
+            background: var(--research-color);
+            color: white;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .flow-step {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .flow-arrow {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .performance-note {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 60px 0;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content,
+            .project,
+            .research-grid,
+            .system-comparison {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons,
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .flow-diagram {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .flow-step {
+                min-width: auto;
+            }
+
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <section class="header">
+        <div class="container">
+            <h1>Nithish Reddy Bhoomannagari</h1>
+            <p class="subtitle">XR Developer • AR/VR Specialist • Unity Expert</p>
+            <div class="skills">
+                <span class="skill-tag">Unity 3D</span>
+                <span class="skill-tag">OpenXR</span>
+                <span class="skill-tag">C#</span>
+                <span class="skill-tag">Computer Vision</span>
+                <span class="skill-tag">Performance Optimization</span>
+            </div>
+            <div class="cta-buttons">
+                <a href="mailto:nithish.bhoomannagari@gmail.com" class="btn btn-primary">Contact Me</a>
+                <a href="resume.pdf" class="btn btn-secondary" target="_blank">Download Resume</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>I'm a <strong>Master's student at Oregon State University</strong> specializing in XR development, with hands-on experience building interactive AR/VR systems using Unity and OpenXR.</p>
+                    
+                    <p>My expertise spans from <strong>performance optimization</strong> (achieving 267% rendering improvements) to <strong>accessibility-focused AR systems</strong> with real-time computer vision. I've worked with industry partners like ClinkLabs on Snapdragon AR2 Gen 1 devices and conducted human-subject studies to validate UX improvements.</p>
+                    
+                    <p>I'm passionate about creating <strong>measurable, usable experiences</strong> that bridge the gap between cutting-edge technology and real-world applications.</p>
+                </div>
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">267%</div>
+                        <div class="stat-label">Performance Improvement Achieved</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">2-3</div>
+                        <div class="stat-label">FPS Current AR Processing</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">Years Industry Experience</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">3.7</div>
+                        <div class="stat-label">Graduate GPA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="projects">
+        <div class="container">
+            <h2>Featured Projects</h2>
+            <div class="project-grid">
+                
+                <!-- NaVision Project -->
+                <div class="project">
+                    <div class="project-video">
+                        <iframe src="https://www.youtube.com/embed/ngsqKmwUl-E"
+                                title="NaVision AR Navigation System Demo" 
+                                allowfullscreen></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3>NaVision: AR Accessibility System</h3>
+                        <div class="project-tech">
+                            <span class="status-tag status-completed">Implemented</span>
+                            <span class="tech-tag">Unity 3D</span>
+                            <span class="tech-tag">OpenAI API</span>
+                            <span class="tech-tag">Meta Voice SDK</span>
+                            <span class="tech-tag">OpenXR</span>
+                            <span class="tech-tag">C#</span>
+                        </div>
+                        <p class="project-description">
+                            AR accessibility system using smart glasses with passthrough, custom wake word detection ("hey vision"), and OpenAI API integration for real-time scene analysis and audio feedback.
+                        </p>
+                        <ul class="project-highlights">
+                            <li><strong>Current Performance:</strong> 2-3 FPS image analysis with 1-2 second latency</li>
+                            <li><strong>Voice Pipeline:</strong> Image capture → OpenAI API → TTS → Audio output</li>
+                            <li><strong>Platform Integration:</strong> Meta Voice SDK for wake word detection</li>
+                            <li><strong>Modular Architecture:</strong> Designed for cross-platform deployment</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- VR Campus Simulation -->
+                <div class="project">
+                    <div class="project-video">
+                        <iframe src="https://www.youtube.com/embed/n8fTFQmUz-c"
+                                title="VR Campus Simulation Demo" 
+                                allowfullscreen></iframe>
+                    </div>
+                    <div class="project-info">
+                        <h3>VR Campus Simulation</h3>
+                        <div class="project-tech">
+                            <span class="status-tag status-completed">Completed</span>
+                            <span class="tech-tag">Unreal Engine</span>
+                            <span class="tech-tag">Cesium VR Plugin</span>
+                            <span class="tech-tag">Custom VR Pawn</span>
+                            <span class="tech-tag">C++</span>
+                        </div>
+                        <p class="project-description">
+                            Immersive VR campus experience using accurate geospatial data integration with custom navigation mechanics optimized for VR controllers.
+                        </p>
+                        <ul class="project-highlights">
+                            <li>Built using Cesium VR plugin for accurate geospatial data integration</li>
+                            <li>Implemented custom VR pawn with fly and snap turn navigation mechanics</li>
+                            <li>Developed custom navigation system and interactive elements using Unreal's VR framework</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Research-Based System Architecture -->
+    <section class="research-section">
+        <div class="container">
+            <h2>Research-Based AR Accessibility Architecture</h2>
+            <p class="section-intro">
+                Based on systematic literature review of AR accessibility systems, I've identified key technical approaches and developed a tiered architecture that addresses real-world hardware constraints while maximizing user functionality.
+            </p>
+
+            <div class="research-grid">
+                <div class="research-card">
+                    <h3><span class="card-icon">🔍</span>Literature Analysis</h3>
+                    <div class="research-content">
+                        Analyzed 50+ research papers on AR accessibility systems to understand performance constraints, user needs, and technical approaches that work in practice.
+                    </div>
+                    <div class="metric">
+                        <strong>Key Finding:</strong> Most successful systems achieve 2-3 FPS on mobile hardware, requiring hybrid architectures for complex tasks
+                    </div>
+                    <div class="metric">
+                        <strong>User Priority:</strong> Audio feedback is the primary interface in 95% of successful AR accessibility systems
+                    </div>
+                </div>
+
+                <div class="research-card">
+                    <h3><span class="card-icon">⚡</span>Performance Reality</h3>
+                    <div class="research-content">
+                        Through testing and research validation, identified the trade-offs between on-device processing and server-based computation for real-time accessibility features.
+                    </div>
+                    <div class="metric">
+                        <strong>On-Device:</strong> 2-3 FPS (Current OpenAI API implementation)
+                    </div>
+                    <div class="metric">
+                        <strong>Server Processing:</strong> 30+ FPS potential using RTX 4090 + ONNX models
+                    </div>
+                </div>
+            </div>
+
+            <div class="architecture">
+                <h3>System Architecture Comparison</h3>
+                
+                <div class="system-comparison">
+                    <div class="system current">
+                        <h4>Current Implementation <span class="system-tag tag-current">Live</span></h4>
+                        <div class="flow-diagram">
+                            <div class="flow-step">Smart Glasses</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">OpenAI API</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">TTS Audio</div>
+                        </div>
+                        <div class="performance-note">
+                            <strong>Performance:</strong> 2-3 FPS processing, 1-2 second latency<br>
+                            <strong>Wake Word:</strong> "Hey vision" using Meta Voice SDK<br>
+                            <strong>Platform:</strong> Quest 3, Mentra Live smart glasses
+                        </div>
+                    </div>
+
+                    <div class="system planned">
+                        <h4>Research-Based Architecture <span class="system-tag tag-planned">Development</span></h4>
+                        <div class="flow-diagram">
+                            <div class="flow-step">Smart Glasses</div>
+                            <div class="flow-arrow">↔</div>
+                            <div class="flow-step">Mobile App</div>
+                            <div class="flow-arrow">↔</div>
+                            <div class="flow-step">RTX 4090 Server</div>
+                        </div>
+                        <div class="performance-note">
+                            <strong>Target Performance:</strong> 30+ FPS with ONNX models (DINO, YOLO)<br>
+                            <strong>Hybrid Processing:</strong> Critical functions on-device, complex CV on server<br>
+                            <strong>Research Basis:</strong> Tiered architecture from AR accessibility literature
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric">
+                    <strong>ONNX Deployment Pipeline:</strong> Partially developed custom system to deploy optimized models on both server and smart glasses hardware, based on Meta's provided samples and adapted for accessibility use cases.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact">
+        <div class="container">
+            <h2>Let's Connect</h2>
+            <p>Interested in discussing XR development, collaboration opportunities, or my research-based approach to AR accessibility?</p>
+            <div class="contact-links">
+                <a href="mailto:nithish.bhoomannagari@gmail.com" class="btn btn-primary">Email Me</a>
+                <a href="https://www.linkedin.com/in/b-nithish-reddy-387b08159/" class="btn btn-secondary" target="_blank">LinkedIn</a>
+                <a href="https://github.com/Nishureddy99" class="btn btn-secondary" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
