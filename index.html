@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nithish Reddy — XR Developer</title>
+  <title>Nithish Reddy - XR Developer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
@@ -589,11 +589,13 @@
 
     .timeline-date {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text);
       letter-spacing: 0.04em;
       padding-top: 0.3rem;
       text-align: right;
+      line-height: 1.6;
     }
 
     .timeline-dot {
@@ -758,7 +760,7 @@
 
   <!-- Nav -->
   <nav>
-    <a class="nav-logo" href="#">NR_BHOOMANNAGARI</a>
+    <a class="nav-logo" href="#">NITHISH REDDY</a>
     <ul class="nav-links">
       <li><a href="#projects">Projects</a></li>
       <li><a href="#research">Research</a></li>
@@ -775,7 +777,7 @@
       <div class="hero-label">XR Software Engineer — Oregon State University</div>
       <h1>Building for<br /><span>Spatial Computing.</span></h1>
       <p class="hero-desc">
-        I build real-time 3D and AR/VR systems — from GPU-optimized rendering pipelines to accessibility-focused AR on Quest 3. I care about the engineering underneath: frame pacing, inference latency, interaction systems that don't break when something goes wrong.
+        I build real-time 3D and AR/VR systems, from GPU-optimized rendering pipelines to accessibility-focused AR on Quest 3 and audio-first AI applications for smart glasses. I care about the engineering underneath: frame pacing, inference latency, interaction systems that don't break when something goes wrong.
       </p>
       <div class="hero-tags">
         <span class="tag">Unity 3D</span>
@@ -786,6 +788,8 @@
         <span class="tag">GLSL / HLSL</span>
         <span class="tag">GPU Instancing</span>
         <span class="tag">Python</span>
+        <span class="tag">MentraOS SDK</span>
+        <span class="tag">Kotlin</span>
       </div>
       <div class="hero-cta">
         <a href="#projects" class="btn btn-primary">View Projects</a>
@@ -818,7 +822,7 @@
   <section id="projects">
     <div class="section-label">01 — Featured Work</div>
     <h2 class="section-title">Projects</h2>
-    <p class="section-sub">Real deployed systems, real performance numbers, real users.</p>
+    <p class="section-sub">Real deployed systems and active builds - performance numbers where they exist, honest WIP labels where they don't.</p>
 
     <div class="project-list">
 
@@ -832,18 +836,18 @@
           <h3>3D VR Graph Visualization Tool</h3>
           <span class="project-status status-live">Research · Deployed</span>
           <p class="project-desc">
-            A cross-platform tool I built at OSU for HPC researchers to explore network datasets in immersive VR and on desktop. The biggest challenge was making it actually usable at scale — 10K+ nodes in a VR headset is a different problem than rendering the same data on a monitor. I had to rethink the entire rendering and loading pipeline to get there.
+            A cross-platform tool I built at OSU for HPC researchers to explore network datasets in immersive VR and on desktop. The biggest challenge was making it actually usable at scale - 10K+ nodes in a VR headset is a different problem than rendering the same data on a monitor. I had to rethink the entire rendering and loading pipeline to get there.
           </p>
 
           <div class="eng-callout">
             <div class="eng-callout-label">What I actually built</div>
             <ul>
               <li>GPU instancing pipeline grouping nodes by mesh and material pair, issuing single <code>DrawMeshInstanced</code> calls per batch (1023 max) with per-instance color via <code>MaterialPropertyBlock</code> to avoid breaking the instancing group</li>
-              <li>Coroutine-driven batch loader that distributes node instantiation across frames with configurable batch size and delay — eliminated a 2–3 second VR freeze that was making the headset unusable at 10K+ nodes</li>
+              <li>Coroutine-driven batch loader that distributes node instantiation across frames with configurable batch size and delay - eliminated a 2–3 second VR freeze that was making the headset unusable at 10K+ nodes</li>
               <li>Typed constraint-based filtering system that auto-detects parameter types (numeric, string, unit-with-SI-prefix, array) and normalizes SI units across the full pico-to-tera scale before comparison</li>
               <li>Undo/redo system where every user action stores delegate pairs, and a dependency graph tracks which interactions share affected nodes so undo cascades correctly</li>
               <li>Custom <code>BiconnectedComponentsAlgorithm</code> implementing Tarjan's articulation point detection via DFS, followed by flood-fill component membership and block-cut tree construction</li>
-              <li>OpenXR action-based input targeting both Meta Quest and desktop from shared application logic — same interaction code, different platform binders</li>
+              <li>OpenXR action-based input targeting both Meta Quest and desktop from shared application logic - same interaction code, different platform binders</li>
             </ul>
           </div>
 
@@ -891,12 +895,12 @@
           <div class="eng-callout">
             <div class="eng-callout-label">What I actually built</div>
             <ul>
-              <li>Dual-backend inference with a shared interface contract — routes between on-device ONNX/YOLOv8 for fast detection and OpenAI GPT-4o for richer scene descriptions, with each backend independently testable and swappable</li>
+              <li>Dual-backend inference with a shared interface contract - routes between on-device ONNX/YOLOv8 for fast detection and OpenAI GPT-4o for richer scene descriptions, with each backend independently testable and swappable</li>
               <li>Quest 3 passthrough pipeline: camera intrinsics via <code>PassthroughCameraUtils</code>, frame capture as <code>Texture2D</code>, resize and <code>TextureConverter.ToTensor</code>, then layer-by-layer inference via <code>ScheduleIterable</code> yielding every 25 layers to keep the frame rate stable</li>
               <li>2D-to-3D spatial mapping: projects bounding box centers to world rays using camera intrinsics, then intersects with the Quest 3 scene mesh via <code>EnvironmentRayCastSampleManager</code> to get real-world distance and direction</li>
               <li>Non-Maximum Suppression with IoU-based duplicate filtering at 0.6 threshold, sorted by confidence, with an indoor object allowlist to suppress irrelevant COCO classes</li>
               <li>Voice-first interaction using the Wit.ai NLP SDK for wake word detection and natural language commands, with controller fallback for accessibility</li>
-              <li>Prioritized audio queue using <code>Queue&lt;AudioRequest&gt;</code> with rate limiting and new-detection diffing — announces the most important new objects without stepping on itself</li>
+              <li>Prioritized audio queue using <code>Queue&lt;AudioRequest&gt;</code> with rate limiting and new-detection diffing - announces the most important new objects without stepping on itself</li>
             </ul>
           </div>
 
@@ -929,8 +933,8 @@
 
       <!-- VR Campus -->
       <div class="project-item fade-up">
-        <div class="project-media" style="background: var(--surface); display:flex; align-items:center; justify-content:center;">
-          <span style="font-family:var(--font-mono);font-size:0.8rem;color:var(--muted);">[ demo video coming soon ]</span>
+        <div class="project-media">
+          <iframe src=" https://www.youtube.com/embed/n8fTFQmUz-c" title="NaVision AR System" allowfullscreen></iframe>
         </div>
         <div class="project-info">
           <div class="project-num">// PROJECT_03</div>
@@ -1017,6 +1021,70 @@
         </div>
       </div>
 
+      <!-- Smart Glasses -->
+      <div class="project-item fade-up">
+      <div class="project-media">
+        <img src="smartglassesimage.jpeg" alt="Mentra Live smart glasses" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="project-info">
+          <div class="project-num">// PROJECT_05</div>
+          <h3>Smart Glasses AI Notes Apps</h3>
+          <span class="project-status status-research">In Progress · Multi-platform</span>
+          <p class="project-desc">
+            Building smart notes applications across two smart glasses platforms - Mentra Live and JL Allwinner. Both glasses have no display, so the entire interaction model is audio-first: the mic captures conversations, AI processes and stores them, and the user gets answers spoken back. The interesting engineering problem on each platform is different, which has been a useful forcing function for understanding how the underlying architectures actually compare.
+          </p>
+
+          <div class="eng-callout">
+            <div class="eng-callout-label">Mentra Live - TypeScript / MentraOS SDK</div>
+            <ul>
+              <li>Node.js app server connecting to MentraOS cloud relay over WebSocket - glasses → phone → cloud → server data path, with the phone acting as the BLE bridge and STT processor</li>
+              <li>Subscribes to <code>onTranscription(isFinal)</code> events rather than raw audio chunks - platform handles STT, server receives text, which keeps the architecture simpler and reduces compliance surface</li>
+              <li>Per-user conversation storage keyed by <code>userId</code> (stable across session restarts) with session-level <code>sessionId</code> - designed to survive BLE drops and phone lock screen kills without losing conversation context</li>
+              <li>Question intent detection on incoming transcription, followed by LLM retrieval call with accumulated transcript as context - answer delivered back through glasses speakers via TTS</li>
+              <li>Audio queue with rate limiting and new-detection diffing so spoken responses don't overlap or interrupt the user's ongoing speech</li>
+            </ul>
+          </div>
+
+          <div class="eng-callout">
+            <div class="eng-callout-label">JL Allwinner — Kotlin / Android companion app</div>
+            <ul>
+              <li>Android companion app connecting to JL Allwinner glasses over BLE GATT for commands and WiFi Direct for media transfer - two separate transport layers that have to be sequenced correctly</li>
+              <li>All hardware commands go through <code>LargeDataHandler.glassesControl(byteArray)</code> - photo trigger, audio start/stop, AI recognition — with responses parsed via <code>GlassModelControlResponse.getWorkTypeIng()</code> to track glasses state</li>
+              <li>Connection lifecycle gated on <code>onServiceDiscovered()</code> before any <code>LargeDataHandler</code> calls are allowed - a common silent failure point when commands are issued too early in the BLE handshake</li>
+              <li>WiFi Direct credential handshake: glasses push SSID and password to the phone over BLE, stored in <code>DeviceManager</code>, then <code>GlassesControl.importAlbum()</code> uses them to pull media files - the two transports coordinate through this shared state</li>
+              <li>PCM voice streaming via <code>GlassesControl.receiveOpusData()</code> with Opus/Speex native codec decoding - audio data decoded on the phone and forwarded to the AI pipeline for processing</li>
+            </ul>
+          </div>
+
+          <div class="project-tech-list">
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">MentraOS SDK</span>
+            <span class="tech-pill">Mentra Live</span>
+            <span class="tech-pill">Kotlin</span>
+            <span class="tech-pill">Android</span>
+            <span class="tech-pill">BLE GATT</span>
+            <span class="tech-pill">WiFi Direct</span>
+            <span class="tech-pill">JL Allwinner SDK</span>
+            <span class="tech-pill">OpenAI API</span>
+            <span class="tech-pill">Node.js</span>
+          </div>
+          <div class="project-metrics">
+            <div class="metric-item">
+              <span class="metric-val">2</span>
+              <span class="metric-label">hardware platforms</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">Audio-first</span>
+              <span class="metric-label">no-display interaction model</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">In progress</span>
+              <span class="metric-label">active development</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1036,19 +1104,19 @@
       <div class="research-card fade-up">
         <div class="card-icon">🧪</div>
         <h4>Mixed-Methods User Study</h4>
-        <p>Designed a counterbalanced within-subjects study comparing HMD-VR vs Desktop VR for graph analysis. Tasks were built from expert user feedback and the Brehmer–Munzner graph task taxonomy. I embedded NASA-TLX directly in the VR application so participants never had to remove the headset between task blocks — keeping the session flow intact.</p>
+        <p>Designed a counterbalanced within-subjects study comparing HMD-VR vs Desktop VR for graph analysis. Tasks were built from expert user feedback and the Brehmer–Munzner graph task taxonomy. I embedded NASA-TLX directly in the VR application so participants never had to remove the headset between task blocks - keeping the session flow intact.</p>
         <div class="highlight">n=14 participants · SUS · UEQ · In-app NASA-TLX · Think-aloud protocol · IRB-approved</div>
       </div>
       <div class="research-card fade-up">
         <div class="card-icon">⚡</div>
         <h4>GPU Performance Engineering</h4>
-        <p>Tracked down and fixed a 2–3 second VR scene freeze at 10K+ nodes. The bottleneck wasn't the node count itself — it was synchronous VFX and shader initialization in <code>Start()</code>. I redesigned the loading pipeline to distribute instantiation across frames using coroutines, and added GPU instancing via <code>Graphics.DrawMeshInstanced</code> to cut draw calls.</p>
+        <p>Tracked down and fixed a 2–3 second VR scene freeze at 10K+ nodes. The bottleneck wasn't the node count itself - it was synchronous VFX and shader initialization in <code>Start()</code>. I redesigned the loading pipeline to distribute instantiation across frames using coroutines, and added GPU instancing via <code>Graphics.DrawMeshInstanced</code> to cut draw calls.</p>
         <div class="highlight">60+ FPS sustained on Quest hardware · No scene freeze · Draw call batching via MaterialPropertyBlock</div>
       </div>
       <div class="research-card fade-up">
         <div class="card-icon">🔧</div>
         <h4>CI/CD and Build Pipeline</h4>
-        <p>Containerized the Unity Linux build to run on Windows using Docker Desktop's WSL2 backend with WSLg graphics forwarding — this solved the OpenGL/GUI failures I kept hitting with a plain WSL-hosted Docker run. Multi-platform builds for Windows, Linux, and Quest shipped to customers on a weekly sprint cadence.</p>
+        <p>Containerized the Unity Linux build to run on Windows using Docker Desktop's WSL2 backend with WSLg graphics forwarding - this solved the OpenGL/GUI failures I kept hitting with a plain WSL-hosted Docker run. Multi-platform builds for Windows, Linux, and Quest shipped to customers on a weekly sprint cadence.</p>
         <div class="highlight">Docker · Azure DevOps · GitHub Actions · 60% reduction in deployment time</div>
       </div>
     </div>
@@ -1063,27 +1131,27 @@
     <div class="timeline">
 
       <div class="timeline-item fade-up">
-        <div class="timeline-date">Dec 2023<br />— Oct 2025</div>
+        <div class="timeline-date">Dec 2023<br />- Dec 2025</div>
         <div class="timeline-dot"></div>
         <div class="timeline-body">
-          <h4>Graduate Research Assistant — Software Engineer</h4>
+          <h4>Graduate Research Assistant - Software Engineer</h4>
           <div class="timeline-company">Oregon State University · Corvallis, OR</div>
           <p>Led a team of 3 building a cross-platform 3D graph visualization system for HPC researchers. I owned the rendering pipeline, the tutorial and onboarding system, and the CI/CD setup for Windows, Linux, and Quest builds. Also designed and ran a formal IRB-approved user study using in-app NASA-TLX, SUS, and UEQ to evaluate usability across VR and desktop.</p>
         </div>
       </div>
 
       <div class="timeline-item fade-up">
-        <div class="timeline-date">Apr 2025<br />— Jun 2025</div>
+        <div class="timeline-date">Apr 2025<br />- Jun 2025</div>
         <div class="timeline-dot"></div>
         <div class="timeline-body">
-          <h4>Graduate Teaching Assistant — CS 362 (Software Engineering)</h4>
+          <h4>Graduate Teaching Assistant - CS 362 (Software Engineering)</h4>
           <div class="timeline-company">Oregon State University · Corvallis, OR</div>
           <p>Mentored 150+ students in automated testing, TDD, and CI/CD. Built reproducible test suites with Vitest and Playwright integrated into GitHub Actions, which cut grading latency by 70%.</p>
         </div>
       </div>
 
       <div class="timeline-item fade-up">
-        <div class="timeline-date">Nov 2020<br />— Aug 2023</div>
+        <div class="timeline-date">Nov 2020<br />- Aug 2023</div>
         <div class="timeline-dot"></div>
         <div class="timeline-body">
           <h4>Systems Engineer</h4>
@@ -1097,7 +1165,7 @@
 
   <!-- Skills -->
   <section id="skills">
-    <div class="section-label">04 — Technical Stack</div>
+    <div class="section-label">04 - Technical Stack</div>
     <h2 class="section-title">Skills</h2>
     <p class="section-sub">Tools I use to ship real things.</p>
 
@@ -1115,6 +1183,20 @@
           <span class="skill-chip">Frame Pacing</span>
           <span class="skill-chip">Unity Profiler</span>
           <span class="skill-chip">RenderDoc</span>
+        </div>
+      </div>
+      <div class="skill-group fade-up">
+        <div class="skill-group-label">Smart Glasses</div>
+        <div class="skill-items">
+          <span class="skill-chip">MentraOS SDK</span>
+          <span class="skill-chip">Mentra Live</span>
+          <span class="skill-chip">JL Allwinner SDK</span>
+          <span class="skill-chip">AugmentOS</span>
+          <span class="skill-chip">BLE GATT</span>
+          <span class="skill-chip">WiFi Direct</span>
+          <span class="skill-chip">Audio-first UX</span>
+          <span class="skill-chip">TypeScript</span>
+          <span class="skill-chip">Kotlin</span>
         </div>
       </div>
       <div class="skill-group fade-up">
@@ -1178,7 +1260,7 @@
 
   <!-- Contact -->
   <section id="contact">
-    <div class="section-label">05 — Get In Touch</div>
+    <div class="section-label">05 - Get In Touch</div>
     <h2 class="section-title">Let's Talk</h2>
     <p class="contact-desc">Open to SWE and XR engineering roles. If you're working on something interesting in real-time 3D, AR/VR, or spatial computing, I'd like to hear about it.</p>
     <div class="contact-links">
@@ -1191,7 +1273,7 @@
 
   <!-- Footer -->
   <footer>
-    <span>Nithish Reddy Bhoomannagari — XR Developer</span>
+    <span>Nithish Reddy Bhoomannagari - XR Developer</span>
     <span>Corvallis, OR · Open to relocation</span>
   </footer>
 
