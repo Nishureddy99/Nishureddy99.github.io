@@ -824,9 +824,7 @@
     <h2 class="section-title">Projects</h2>
     <p class="section-sub">Real deployed systems and active builds - performance numbers where they exist, honest WIP labels where they don't.</p>
 
-    <div class="project-list">
-
-      <!-- 3D Graph Visualization -->
+    <div class="project-list"><!-- 3D Graph Visualization -->
       <div class="project-item fade-up">
         <div class="project-media">
           <img src="3D_Graph.png" alt="3D VR Graph Visualization Tool" style="width:100%;height:100%;object-fit:cover;display:block;" />
@@ -879,13 +877,83 @@
         </div>
       </div>
 
-      <!-- NaVision -->
+      <!-- EchoRep -->
+      <div class="project-item fade-up">
+        <div class="project-media">
+          <iframe src="https://www.youtube.com/embed/WNip3Gco_qw" title="EchoRep AI Retail Sales Copilot" allowfullscreen></iframe>
+        </div>
+        <div class="project-info">
+          <div class="project-num">// PROJECT_02</div>
+          <h3>EchoRep: AI Retail Sales Copilot</h3>
+          <span class="project-status status-live">Finalist · XRCC 2026 Berlin</span>
+          <p class="project-desc">
+            An AI-powered MR sales copilot for retail associates on Meta Quest 3, built with a hackathon team for XRCC 2026 and selected into the Berlin finals. Research on in-store shopping is blunt about the problem: most shoppers already comparison-shop mid-aisle on their phone, and the moment a rep can't answer a question as fast as Google can, they lose the conversation. I own the path from scan to grounded answer - passthrough perception, tool-calling retrieval, session memory, and the voice loop that gets a talking point back to the rep in seconds.
+          </p>
+
+          <div class="eng-callout">
+            <div class="eng-callout-label">Scan & Perception</div>
+            <ul>
+              <li>Dual-decode pipeline on the Quest 3 passthrough feed: ZXing barcode/QR decode on a background thread every 300ms, <code>OCR.space</code> running in parallel on a ~3s cadence for plain-text labels, neither blocking the render loop</li>
+              <li>Wrote a custom <code>Color32LuminanceSource</code> for ZXing correcting Unity's bottom-up pixel layout with ITU-R BT.709 luminance weighting</li>
+              <li>2-frame confirmation plus a 2-second dedup window before a scan fires, so a shaky read doesn't double-trigger a lookup</li>
+              <li>Exposed a second scan entry point (<code>ScannerEvents.RaiseRemoteScan</code>) so a phone-companion scan runs through the identical pipeline as the headset camera</li>
+            </ul>
+          </div>
+
+          <div class="eng-callout">
+            <div class="eng-callout-label">Retrieval & Tool Calling</div>
+            <ul>
+              <li>Built a scan resolver trying exact SKU/GTIN/EAN/barcode/ASIN matches first, falling back to fuzzy keyword search with a confidence floor</li>
+              <li>Implemented OpenAI-compatible tool calling from scratch against Groq - 6 catalog tools, hand-rolled bracket-matching JSON parser for tool-call payloads</li>
+              <li>Multi-round tool-dispatch loop with a request-version guard so an in-flight answer gets dropped if the rep asks a new question before it resolves</li>
+              <li>Abstracted the LLM layer behind one interface with 4 swappable backends (Groq, Gemini, OpenAI, and a Hybrid mode using Groq for live web context feeding Gemini's grounded answer)</li>
+            </ul>
+          </div>
+
+          <div class="eng-callout">
+            <div class="eng-callout-label">Memory & Voice</div>
+            <ul>
+              <li>Session memory tracking active products by recency/score, resolving references like "it" or "compare them" back to the right product before the query reaches the LLM</li>
+              <li>Bilingual EN/DE query normalizer fixing Whisper STT misrecognitions and translating German retail vocabulary pre-intent-classification</li>
+              <li>Hands-free pinch-to-talk voice input with barge-in (new recording cuts any playing TTS) and native Android TTS via direct <code>android.speech.tts.TextToSpeech</code> reflection</li>
+            </ul>
+          </div>
+
+          <div class="project-tech-list">
+            <span class="tech-pill">Unity 3D</span>
+            <span class="tech-pill">C#</span>
+            <span class="tech-pill">Meta XR SDK</span>
+            <span class="tech-pill">Passthrough Camera API</span>
+            <span class="tech-pill">ZXing.Net</span>
+            <span class="tech-pill">OCR.space</span>
+            <span class="tech-pill">Groq</span>
+            <span class="tech-pill">Gemini</span>
+            <span class="tech-pill">OpenAI Tool Calling</span>
+          </div>
+          <div class="project-metrics">
+            <div class="metric-item">
+              <span class="metric-val">6</span>
+              <span class="metric-label">catalog tools exposed to the LLM</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">4</span>
+              <span class="metric-label">swappable LLM backends</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">Finalist</span>
+              <span class="metric-label">XRCC 2026 Berlin</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!-- NaVision -->
       <div class="project-item fade-up">
         <div class="project-media">
           <iframe src="https://www.youtube.com/embed/ngsqKmwUl-E" title="NaVision AR System" allowfullscreen></iframe>
         </div>
         <div class="project-info">
-          <div class="project-num">// PROJECT_02</div>
+          <div class="project-num">// PROJECT_03</div>
           <h3>NaVision: AR Accessibility System</h3>
           <span class="project-status status-live">Deployed · Quest 3</span>
           <p class="project-desc">
@@ -937,7 +1005,7 @@
           <iframe src=" https://www.youtube.com/embed/n8fTFQmUz-c" title="NaVision AR System" allowfullscreen></iframe>
         </div>
         <div class="project-info">
-          <div class="project-num">// PROJECT_03</div>
+          <div class="project-num">// PROJECT_04</div>
           <h3>VR Campus Simulation</h3>
           <span class="project-status status-research">Completed</span>
           <p class="project-desc">
@@ -969,53 +1037,6 @@
             <div class="metric-item">
               <span class="metric-val">6DoF</span>
               <span class="metric-label">navigation system</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Driving Simulator -->
-      <div class="project-item fade-up">
-        <div class="project-media" style="background: var(--surface); display:flex; align-items:center; justify-content:center;">
-          <span style="font-family:var(--font-mono);font-size:0.8rem;color:var(--muted);">[ image coming soon ]</span>
-        </div>
-        <div class="project-info">
-          <div class="project-num">// PROJECT_04</div>
-          <h3>Immersive Driving Simulator</h3>
-          <span class="project-status status-research">Completed · EECS XR Lab</span>
-          <p class="project-desc">
-            A 270-degree triple-screen driving simulator I set up for the OSU EECS XR Lab. The tricky part was getting the spatial calibration right across three displays so the visual field matched what a driver would actually see — and wiring up physical pedal hardware so the input felt connected to the simulation.
-          </p>
-
-          <div class="eng-callout">
-            <div class="eng-callout-label">What I actually built</div>
-            <ul>
-              <li>270° triple-screen spatial calibration: aligned camera frustum parameters and screen offsets across all three displays to remove seams and match real-vehicle peripheral visual field</li>
-              <li>Physical-to-virtual hardware integration: wired driving pedal inputs to the Unity vehicle controller and verified zero-lag physical-virtual response through structured test driving</li>
-              <li>Custom city and vehicle model import pipeline with LOD configuration for consistent frame rate across varied scene geometry</li>
-              <li>Ran a pre-deployment validation protocol to confirm spatial coherence and input response before the simulator went into lab use</li>
-            </ul>
-          </div>
-
-          <div class="project-tech-list">
-            <span class="tech-pill">Unity 3D</span>
-            <span class="tech-pill">C#</span>
-            <span class="tech-pill">Hardware Integration</span>
-            <span class="tech-pill">Multi-screen Calibration</span>
-            <span class="tech-pill">Custom City Models</span>
-          </div>
-          <div class="project-metrics">
-            <div class="metric-item">
-              <span class="metric-val">270°</span>
-              <span class="metric-label">immersive display coverage</span>
-            </div>
-            <div class="metric-item">
-              <span class="metric-val">Physical</span>
-              <span class="metric-label">pedal hardware integration</span>
-            </div>
-            <div class="metric-item">
-              <span class="metric-val">Validated</span>
-              <span class="metric-label">spatial calibration</span>
             </div>
           </div>
         </div>
@@ -1085,7 +1106,54 @@
         </div>
       </div>
 
-    </div>
+      <!-- Driving Simulator -->
+      <div class="project-item fade-up">
+        <div class="project-media" style="background: var(--surface); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family:var(--font-mono);font-size:0.8rem;color:var(--muted);">[ image coming soon ]</span>
+        </div>
+        <div class="project-info">
+          <div class="project-num">// PROJECT_06</div>
+          <h3>Immersive Driving Simulator</h3>
+          <span class="project-status status-research">Completed · EECS XR Lab</span>
+          <p class="project-desc">
+            A 270-degree triple-screen driving simulator I set up for the OSU EECS XR Lab. The tricky part was getting the spatial calibration right across three displays so the visual field matched what a driver would actually see — and wiring up physical pedal hardware so the input felt connected to the simulation.
+          </p>
+
+          <div class="eng-callout">
+            <div class="eng-callout-label">What I actually built</div>
+            <ul>
+              <li>270° triple-screen spatial calibration: aligned camera frustum parameters and screen offsets across all three displays to remove seams and match real-vehicle peripheral visual field</li>
+              <li>Physical-to-virtual hardware integration: wired driving pedal inputs to the Unity vehicle controller and verified zero-lag physical-virtual response through structured test driving</li>
+              <li>Custom city and vehicle model import pipeline with LOD configuration for consistent frame rate across varied scene geometry</li>
+              <li>Ran a pre-deployment validation protocol to confirm spatial coherence and input response before the simulator went into lab use</li>
+            </ul>
+          </div>
+
+          <div class="project-tech-list">
+            <span class="tech-pill">Unity 3D</span>
+            <span class="tech-pill">C#</span>
+            <span class="tech-pill">Hardware Integration</span>
+            <span class="tech-pill">Multi-screen Calibration</span>
+            <span class="tech-pill">Custom City Models</span>
+          </div>
+          <div class="project-metrics">
+            <div class="metric-item">
+              <span class="metric-val">270°</span>
+              <span class="metric-label">immersive display coverage</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">Physical</span>
+              <span class="metric-label">pedal hardware integration</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">Validated</span>
+              <span class="metric-label">spatial calibration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+          </div>
   </section>
 
   <!-- Research -->
@@ -1131,7 +1199,7 @@
     <div class="timeline">
 
       <div class="timeline-item fade-up">
-        <div class="timeline-date">Dec 2023<br />- Dec 2025</div>
+        <div class="timeline-date">Dec 2023<br />- Mar 2026</div>
         <div class="timeline-dot"></div>
         <div class="timeline-body">
           <h4>Graduate Research Assistant - Software Engineer</h4>
