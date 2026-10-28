@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nithish Reddy · XR Software Engineer</title>
+  <meta name="description" content="Nithish Reddy, XR software engineer building real-time 3D, mixed reality and AI apps for Meta Quest 3 and smart glasses." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="wrap">
+      <a class="nav-logo" href="#top">NITHISH REDDY</a>
+      <ul class="nav-links">
+        <li class="optional"><a href="#work">Work</a></li>
+        <li class="optional"><a href="#experience">Experience</a></li>
+        <li class="optional"><a href="#contact">Contact</a></li>
+        <li><a class="nav-cta" href="Nithish_Reddy_Resume_SE.pdf" target="_blank" rel="noopener">Resume</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <!-- Hero: who I am and what I build, readable in one glance -->
+    <header class="hero">
+      <div class="wrap">
+        <div class="eyebrow">XR Software Engineer · Oregon State University</div>
+        <h1>XR software engineer<br /><span>for headsets and smart glasses.</span></h1>
+        <p class="hero-sub">
+          I build the systems under AR/VR and AI apps: rendering that holds 60 FPS at scale, on-device inference on Quest 3, and voice-first interfaces for glasses with no display.
+        </p>
+        <p class="hero-stack">Unity · C# · C++ · OpenXR · Meta XR SDK · Python · Kotlin</p>
+        <div class="hero-cta">
+          <a href="#work" class="btn btn-primary">See projects</a>
+          <a href="Nithish_Reddy_Resume_SE.pdf" class="btn btn-outline" target="_blank" rel="noopener">Download resume</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Proof numbers -->
+    <div class="wrap">
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-num">10K+</div>
+          <div class="stat-desc">Nodes rendered @ 60+ FPS</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">267%</div>
+          <div class="stat-desc">Rendering performance improvement</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">&lt;150ms</div>
+          <div class="stat-desc">On-device AR inference latency</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">4 yrs</div>
+          <div class="stat-desc">Industry + research experience</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projects: one visual + one line each. Full detail lives on projects.html -->
+    <section class="block" id="work">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Selected work</div>
+            <h2 class="section-title">Projects</h2>
+          </div>
+          <a class="text-link" href="projects.html">Full technical breakdown →</a>
+        </div>
+
+        <div class="work-grid">
+
+          <article class="card">
+            <div class="media">
+              <img src="3D_Graph.png" alt="3D VR graph visualization of a large node network" loading="lazy" />
+            </div>
+            <div class="card-body">
+              <span class="badge badge-live">Research · Deployed</span>
+              <h3>3D VR Graph Visualization Tool</h3>
+              <p>A VR and desktop tool for HPC researchers to explore 10K+ node networks at 60+ FPS, validated in a 14-person user study.</p>
+              <div class="pills">
+                <span class="pill">Unity</span><span class="pill">C#</span><span class="pill">OpenXR</span><span class="pill">GPU instancing</span>
+              </div>
+              <a class="text-link" href="projects.html#graph-viz">How it's built →</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <button class="media yt" type="button" data-yt="WNip3Gco_qw" data-title="EchoRep demo" aria-label="Play the EchoRep demo video">
+              <img src="https://i.ytimg.com/vi/WNip3Gco_qw/hqdefault.jpg" alt="" loading="lazy" />
+              <span class="play" aria-hidden="true"></span>
+            </button>
+            <div class="card-body">
+              <span class="badge badge-live">XRCC 2026 · Berlin finalist</span>
+              <h3>EchoRep: AI Retail Sales Copilot</h3>
+              <p>A mixed reality sales copilot on Quest 3. Scan a product, ask by voice, get a grounded answer in seconds. Team build; I owned scan to answer.</p>
+              <div class="pills">
+                <span class="pill">Quest 3</span><span class="pill">LLM tool calling</span><span class="pill">ZXing</span><span class="pill">Whisper STT</span>
+              </div>
+              <a class="text-link" href="projects.html#echorep">How it's built →</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <button class="media yt" type="button" data-yt="ngsqKmwUl-E" data-title="NaVision demo" aria-label="Play the NaVision demo video">
+              <img src="https://i.ytimg.com/vi/ngsqKmwUl-E/hqdefault.jpg" alt="" loading="lazy" />
+              <span class="play" aria-hidden="true"></span>
+            </button>
+            <div class="card-body">
+              <span class="badge badge-live">Deployed · Quest 3</span>
+              <h3>NaVision: AR Accessibility System</h3>
+              <p>An AR assistant for visually impaired users. GPT-4o describes the scene, and on-device YOLOv8 detects objects in under 150ms.</p>
+              <div class="pills">
+                <span class="pill">Quest 3</span><span class="pill">YOLOv8 / ONNX</span><span class="pill">GPT-4o</span><span class="pill">Unity Sentis</span>
+              </div>
+              <a class="text-link" href="projects.html#navision">How it's built →</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <button class="media yt" type="button" data-yt="n8fTFQmUz-c" data-title="VR Campus Simulation demo" aria-label="Play the VR Campus Simulation video">
+              <img src="https://i.ytimg.com/vi/n8fTFQmUz-c/hqdefault.jpg" alt="" loading="lazy" />
+              <span class="play" aria-hidden="true"></span>
+            </button>
+            <div class="card-body">
+              <span class="badge badge-done">Completed</span>
+              <h3>VR Campus Simulation</h3>
+              <p>The OSU campus in Unreal Engine, built from real geospatial data, with a custom C++ VR pawn tuned for Quest.</p>
+              <div class="pills">
+                <span class="pill">Unreal Engine</span><span class="pill">C++</span><span class="pill">Cesium</span>
+              </div>
+              <a class="text-link" href="projects.html#vr-campus">How it's built →</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="media">
+              <img src="smartglassesimage.jpeg" alt="Mentra Live smart glasses" loading="lazy" />
+            </div>
+            <div class="card-body">
+              <span class="badge badge-done">In progress</span>
+              <h3>Smart Glasses AI Notes Apps</h3>
+              <p>Audio-first notes assistants for two display-less glasses platforms, Mentra Live and JL Allwinner.</p>
+              <div class="pills">
+                <span class="pill">TypeScript</span><span class="pill">Kotlin</span><span class="pill">BLE GATT</span><span class="pill">MentraOS SDK</span>
+              </div>
+              <a class="text-link" href="projects.html#smart-glasses">How it's built →</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="media media-cover">
+              <strong>270°</strong>
+              <span>Triple-screen simulator</span>
+            </div>
+            <div class="card-body">
+              <span class="badge badge-done">Completed · EECS XR Lab</span>
+              <h3>Immersive Driving Simulator</h3>
+              <p>A 270° triple-screen driving simulator with physical pedal hardware, built for the OSU EECS XR Lab.</p>
+              <div class="pills">
+                <span class="pill">Unity</span><span class="pill">C#</span><span class="pill">Hardware integration</span>
+              </div>
+              <a class="text-link" href="projects.html#driving-sim">How it's built →</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience: roles only. Details on projects.html#experience -->
+    <section class="block block-alt" id="experience">
+      <div class="wrap">
+        <div class="eyebrow">Background</div>
+        <h2 class="section-title">Experience</h2>
+        <p class="section-sub">Research, teaching and industry.</p>
+
+        <ul class="xp">
+          <li>
+            <span class="xp-role">Graduate Research Assistant, Software Engineer</span>
+            <span class="xp-org">Oregon State University</span>
+            <span class="xp-date">Dec 2023 – Mar 2026</span>
+          </li>
+          <li>
+            <span class="xp-role">Graduate Teaching Assistant, CS 362 Software Engineering</span>
+            <span class="xp-org">Oregon State University</span>
+            <span class="xp-date">Apr 2025 – Jun 2025</span>
+          </li>
+          <li>
+            <span class="xp-role">Systems Engineer</span>
+            <span class="xp-org">Tata Consultancy Services</span>
+            <span class="xp-date">Nov 2020 – Aug 2023</span>
+          </li>
+        </ul>
+
+        <a class="text-link" href="projects.html#experience">Research, full experience and skills →</a>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="block contact" id="contact">
+      <div class="wrap">
+        <div class="eyebrow">Get in touch</div>
+        <h2 class="section-title">Let's talk</h2>
+        <p class="section-sub">Open to SWE and XR engineering roles. If you're working on something interesting in real-time 3D, AR/VR, or spatial computing, I'd like to hear about it.</p>
+        <div class="contact-links">
+          <a href="mailto:nithish.bhoomannagari@gmail.com" class="btn btn-primary">Email me</a>
+          <a href="https://www.linkedin.com/in/nithish-reddy-bhoomannagari-387b08159/" class="btn btn-outline" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/Nishureddy99" class="btn btn-outline" target="_blank" rel="noopener">GitHub</a>
+          <a href="Nithish_Reddy_Resume_SE.pdf" class="btn btn-outline" target="_blank" rel="noopener">Resume</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Nithish Reddy Bhoomannagari · XR Developer</span>
+      <span>Corvallis, OR · Open to relocation</span>
+    </div>
+  </footer>
+
+  <script>
+    // Load the YouTube player only when someone clicks a thumbnail.
+    // Keeps the page fast: six iframes on load would pull in several MB of player code.
+    document.querySelectorAll('button.yt').forEach(function (thumb) {
+      thumb.addEventListener('click', function () {
+        var holder = document.createElement('div');
+        holder.className = 'media';
+        var player = document.createElement('iframe');
+        player.src = 'https://www.youtube-nocookie.com/embed/' + thumb.dataset.yt + '?autoplay=1&rel=0';
+        player.title = thumb.dataset.title || 'Project video';
+        player.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        player.allowFullscreen = true;
+        holder.appendChild(player);
+        thumb.replaceWith(holder);
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engineering Deep Dive · Nithish Reddy</title>
+  <meta name="description" content="Full technical breakdown of Nithish Reddy's XR projects, research, experience and skills." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="wrap">
+      <a class="nav-logo" href="index.html">← NITHISH REDDY</a>
+      <ul class="nav-links">
+        <li class="optional"><a href="#projects">Projects</a></li>
+        <li class="optional"><a href="#research">Research</a></li>
+        <li class="optional"><a href="#experience">Experience</a></li>
+        <li class="optional"><a href="#skills">Skills</a></li>
+        <li><a class="nav-cta" href="Nithish_Reddy_Resume_SE.pdf" target="_blank" rel="noopener">Resume</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <header class="dd-head">
+      <div class="wrap">
+        <div class="eyebrow">Engineering deep dive</div>
+        <h1>How each project is built</h1>
+        <p>The full technical breakdown behind every project, plus research, experience and the complete stack. For the short version, go back to the <a class="text-link" href="index.html">overview</a>.</p>
+        <nav class="jump" aria-label="Jump to a project">
+          <a href="#graph-viz">3D Graph Viz</a>
+          <a href="#echorep">EchoRep</a>
+          <a href="#navision">NaVision</a>
+          <a href="#vr-campus">VR Campus</a>
+          <a href="#smart-glasses">Smart Glasses</a>
+          <a href="#driving-sim">Driving Simulator</a>
+          <a href="#research">Research</a>
+          <a href="#experience">Experience</a>
+          <a href="#skills">Skills</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Projects -->
+    <section class="block" id="projects">
+      <div class="wrap">
+        <div class="eyebrow">Projects</div>
+        <h2 class="section-title">Technical breakdown</h2>
+        <p class="section-sub">Performance numbers where they exist, honest WIP labels where they don't.</p>
+
+        <div class="project-list">
+      <!-- 3D Graph Visualization -->
+      <div class="project-item" id="graph-viz">
+        <div class="project-media"><div class="media"><img src="3D_Graph.png" alt="3D VR graph visualization of a large node network" loading="lazy" /></div></div>
+        <div class="project-info">
+          <div class="project-num">// PROJECT_01</div>
+          <h3>3D VR Graph Visualization Tool</h3>
+          <span class="project-status status-live">Research · Deployed</span>
+          <p class="project-desc">
+            A cross-platform tool I built at OSU for HPC researchers to explore network datasets in immersive VR and on desktop. The biggest challenge was making it actually usable at scale - 10K+ nodes in a VR headset is a different problem than rendering the same data on a monitor. I had to rethink the entire rendering and loading pipeline to get there.
+          </p>
+
+          <div class="eng-callout">
+            <div class="eng-callout-label">What I actually built</div>
+            <ul>
+              <li>GPU instancing pipeline grouping nodes by mesh and material pair, issuing single <code>DrawMeshInstanced</code> calls per batch (1023 max) with per-instance color via <code>MaterialPropertyBlock</code> to avoid breaking the instancing group</li>
+              <li>Coroutine-driven batch loader that distributes node instantiation across frames with configurable batch size and delay - eliminated a 2–3 second VR freeze that was making the headset unusable at 10K+ nodes</li>
+              <li>Typed constraint-based filtering system that auto-detects parameter types (numeric, string, unit-with-SI-prefix, array) and normalizes SI units across the full pico-to-tera scale before comparison</li>
+              <li>Undo/redo system where every user action stores delegate pairs, and a dependency graph tracks which interactions share affected nodes so undo cascades correctly</li>
+              <li>Custom <code>BiconnectedComponentsAlgorithm</code> implementing Tarjan's articulation point detection via DFS, followed by flood-fill component membership and block-cut tree construction</li>
+              <li>OpenXR action-based input targeting both Meta Quest and desktop from shared application logic - same interaction code, different platform binders</li>
+            </ul>
+          </div>
+
+          <div class="project-tech-list">
+            <span class="tech-pill">Unity 3D</span>
+            <span class="tech-pill">C#</span>
+            <span class="tech-pill">OpenXR</span>
+            <span class="tech-pill">Meta XR SDK</span>
+            <span class="tech-pill">GLSL Shaders</span>
+            <span class="tech-pill">GPU Instancing</span>
+            <span class="tech-pill">QuikGraph</span>
+            <span class="tech-pill">Docker</span>
+            <span class="tech-pill">CI/CD</span>
+          </div>
+          <div class="project-metrics">
+            <div class="metric-item">
+              <span class="metric-val">60+ FPS</span>
+              <span class="metric-label">at 10K+ nodes</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">0 freeze</span>
+              <span class="metric-label">VR scene load</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">n=14</span>
+              <span class="metric-label">user study validated</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EchoRep -->
+      <div class="project-item" id="echorep">
+        <div class="project-media"><button class="media yt" type="button" data-yt="WNip3Gco_qw" data-title="EchoRep demo" aria-label="Play the EchoRep demo video"><img src="https://i.ytimg.com/vi/WNip3Gco_qw/hqdefault.jpg" alt="" loading="lazy" /><span class="play" aria-hidden="true"></span></button></div>
+        <div class="project-info">
+          <div class="project-num">// PROJECT_02</div>
+          <h3>EchoRep: AI Retail Sales Copilot</h3>
+          <span class="project-status status-live">Finalist · XRCC 2026 Berlin</span>
+          <p class="project-desc">
+            An AI-powered MR sales copilot for retail associates on Meta Quest 3, built with a hackathon team for XRCC 2026 and selected into the Berlin finals. Research on in-store shopping is blunt about the problem: most shoppers already comparison-shop mid-aisle on their phone, and the moment a rep can't answer a question as fast as Google can, they lose the conversation. I own the path from scan to grounded answer - passthrough perception, tool-calling retrieval, session memory, and the voice loop that gets a talking point back to the rep in seconds.
+          </p>
+
+          <div class="eng-callout">
+            <div class="eng-callout-label">Scan & Perception</div>
+            <ul>
+              <li>Dual-decode pipeline on the Quest 3 passthrough feed: ZXing barcode/QR decode on a background thread every 300ms, <code>OCR.space</code> running in parallel on a ~3s cadence for plain-text labels, neither blocking the render loop</li>
+              <li>Wrote a custom <code>Color32LuminanceSource</code> for ZXing correcting Unity's bottom-up pixel layout with ITU-R BT.709 luminance weighting</li>
+              <li>2-frame confirmation plus a 2-second dedup window before a scan fires, so a shaky read doesn't double-trigger a lookup</li>
+              <li>Exposed a second scan entry point (<code>ScannerEvents.RaiseRemoteScan</code>) so a phone-companion scan runs through the identical pipeline as the headset camera</li>
+            </ul>
+          </div>
+
+          <div class="eng-callout">
+            <div class="eng-callout-label">Retrieval & Tool Calling</div>
+            <ul>
+              <li>Built a scan resolver trying exact SKU/GTIN/EAN/barcode/ASIN matches first, falling back to fuzzy keyword search with a confidence floor</li>
+              <li>Implemented OpenAI-compatible tool calling from scratch against Groq - 6 catalog tools, hand-rolled bracket-matching JSON parser for tool-call payloads</li>
+              <li>Multi-round tool-dispatch loop with a request-version guard so an in-flight answer gets dropped if the rep asks a new question before it resolves</li>
+              <li>Abstracted the LLM layer behind one interface with 4 swappable backends (Groq, Gemini, OpenAI, and a Hybrid mode using Groq for live web context feeding Gemini's grounded answer)</li>
+            </ul>
+          </div>
+
+          <div class="eng-callout">
+            <div class="eng-callout-label">Memory & Voice</div>
+            <ul>
+              <li>Session memory tracking active products by recency/score, resolving references like "it" or "compare them" back to the right product before the query reaches the LLM</li>
+              <li>Bilingual EN/DE query normalizer fixing Whisper STT misrecognitions and translating German retail vocabulary pre-intent-classification</li>
+              <li>Hands-free pinch-to-talk voice input with barge-in (new recording cuts any playing TTS) and native Android TTS via direct <code>android.speech.tts.TextToSpeech</code> reflection</li>
+            </ul>
+          </div>
+
+          <div class="project-tech-list">
+            <span class="tech-pill">Unity 3D</span>
+            <span class="tech-pill">C#</span>
+            <span class="tech-pill">Meta XR SDK</span>
+            <span class="tech-pill">Passthrough Camera API</span>
+            <span class="tech-pill">ZXing.Net</span>
+            <span class="tech-pill">OCR.space</span>
+            <span class="tech-pill">Groq</span>
+            <span class="tech-pill">Gemini</span>
+            <span class="tech-pill">OpenAI Tool Calling</span>
+          </div>
+          <div class="project-metrics">
+            <div class="metric-item">
+              <span class="metric-val">6</span>
+              <span class="metric-label">catalog tools exposed to the LLM</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">4</span>
+              <span class="metric-label">swappable LLM backends</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">Finalist</span>
+              <span class="metric-label">XRCC 2026 Berlin</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- NaVision -->
+      <div class="project-item" id="navision">
+        <div class="project-media"><button class="media yt" type="button" data-yt="ngsqKmwUl-E" data-title="NaVision demo" aria-label="Play the NaVision demo video"><img src="https://i.ytimg.com/vi/ngsqKmwUl-E/hqdefault.jpg" alt="" loading="lazy" /><span class="play" aria-hidden="true"></span></button></div>
+        <div class="project-info">
+          <div class="project-num">// PROJECT_03</div>
+          <h3>NaVision: AR Accessibility System</h3>
+          <span class="project-status status-live">Deployed · Quest 3</span>
+          <p class="project-desc">
+            An AR assistant for visually impaired users that runs on Meta Quest 3. It streams passthrough camera frames to GPT-4o for real-time scene descriptions delivered through text-to-speech, with a parallel on-device ONNX pipeline so it can still detect objects without a network connection. The core design challenge was making inference reliable under mobile hardware constraints while keeping latency low enough that the audio feedback is actually useful.
+          </p>
+
+          <div class="eng-callout">
+            <div class="eng-callout-label">What I actually built</div>
+            <ul>
+              <li>Dual-backend inference with a shared interface contract - routes between on-device ONNX/YOLOv8 for fast detection and OpenAI GPT-4o for richer scene descriptions, with each backend independently testable and swappable</li>
+              <li>Quest 3 passthrough pipeline: camera intrinsics via <code>PassthroughCameraUtils</code>, frame capture as <code>Texture2D</code>, resize and <code>TextureConverter.ToTensor</code>, then layer-by-layer inference via <code>ScheduleIterable</code> yielding every 25 layers to keep the frame rate stable</li>
+              <li>2D-to-3D spatial mapping: projects bounding box centers to world rays using camera intrinsics, then intersects with the Quest 3 scene mesh via <code>EnvironmentRayCastSampleManager</code> to get real-world distance and direction</li>
+              <li>Non-Maximum Suppression with IoU-based duplicate filtering at 0.6 threshold, sorted by confidence, with an indoor object allowlist to suppress irrelevant COCO classes</li>
+              <li>Voice-first interaction using the Wit.ai NLP SDK for wake word detection and natural language commands, with controller fallback for accessibility</li>
+              <li>Prioritized audio queue using <code>Queue&lt;AudioRequest&gt;</code> with rate limiting and new-detection diffing - announces the most important new objects without stepping on itself</li>
+            </ul>
+          </div>
+
+          <div class="project-tech-list">
+            <span class="tech-pill">Unity 3D</span>
+            <span class="tech-pill">OpenAI GPT-4o</span>
+            <span class="tech-pill">Wit.ai NLP SDK</span>
+            <span class="tech-pill">YOLOv8 ONNX</span>
+            <span class="tech-pill">Unity Sentis</span>
+            <span class="tech-pill">OpenXR</span>
+            <span class="tech-pill">C#</span>
+            <span class="tech-pill">Quest 3 Passthrough</span>
+          </div>
+          <div class="project-metrics">
+            <div class="metric-item">
+              <span class="metric-val">&lt;150ms</span>
+              <span class="metric-label">on-device detection latency</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">Dual</span>
+              <span class="metric-label">cloud + on-device pipelines</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">Real-world</span>
+              <span class="metric-label">3D spatial mapping</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VR Campus -->
+      <div class="project-item" id="vr-campus">
+        <div class="project-media"><button class="media yt" type="button" data-yt="n8fTFQmUz-c" data-title="VR Campus Simulation" aria-label="Play the VR Campus Simulation video"><img src="https://i.ytimg.com/vi/n8fTFQmUz-c/hqdefault.jpg" alt="" loading="lazy" /><span class="play" aria-hidden="true"></span></button></div>
+        <div class="project-info">
+          <div class="project-num">// PROJECT_04</div>
+          <h3>VR Campus Simulation</h3>
+          <span class="project-status status-research">Completed</span>
+          <p class="project-desc">
+            A VR simulation of the OSU campus built in Unreal Engine, using the Cesium plugin to pull in real geospatial data so the buildings and layout actually match the physical campus. I wrote the VR pawn in C++ and spent time tuning the locomotion to feel natural on Quest controllers.
+          </p>
+
+          <div class="eng-callout">
+            <div class="eng-callout-label">What I actually built</div>
+            <ul>
+              <li>Custom C++ VR Pawn with fly locomotion and snap-turn mechanics tuned specifically for Quest controller input bindings</li>
+              <li>Cesium geospatial integration for real-world coordinate accuracy — building geometry derived from actual campus survey data</li>
+              <li>Custom HLSL shaders for rendering optimization and performance tuning on VR hardware</li>
+              <li>Scene layout and LOD configuration to maintain a stable frame rate across the full outdoor environment</li>
+            </ul>
+          </div>
+
+          <div class="project-tech-list">
+            <span class="tech-pill">Unreal Engine</span>
+            <span class="tech-pill">Cesium VR Plugin</span>
+            <span class="tech-pill">C++</span>
+            <span class="tech-pill">HLSL</span>
+            <span class="tech-pill">Custom VR Pawn</span>
+          </div>
+          <div class="project-metrics">
+            <div class="metric-item">
+              <span class="metric-val">Real-world</span>
+              <span class="metric-label">geospatial accuracy</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">6DoF</span>
+              <span class="metric-label">navigation system</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Smart Glasses -->
+      <div class="project-item" id="smart-glasses">
+      <div class="project-media"><div class="media"><img src="smartglassesimage.jpeg" alt="Mentra Live smart glasses" loading="lazy" /></div></div>
+        <div class="project-info">
+          <div class="project-num">// PROJECT_05</div>
+          <h3>Smart Glasses AI Notes Apps</h3>
+          <span class="project-status status-research">In Progress · Multi-platform</span>
+          <p class="project-desc">
+            Building smart notes applications across two smart glasses platforms - Mentra Live and JL Allwinner. Both glasses have no display, so the entire interaction model is audio-first: the mic captures conversations, AI processes and stores them, and the user gets answers spoken back. The interesting engineering problem on each platform is different, which has been a useful forcing function for understanding how the underlying architectures actually compare.
+          </p>
+
+          <div class="eng-callout">
+            <div class="eng-callout-label">Mentra Live - TypeScript / MentraOS SDK</div>
+            <ul>
+              <li>Node.js app server connecting to MentraOS cloud relay over WebSocket - glasses → phone → cloud → server data path, with the phone acting as the BLE bridge and STT processor</li>
+              <li>Subscribes to <code>onTranscription(isFinal)</code> events rather than raw audio chunks - platform handles STT, server receives text, which keeps the architecture simpler and reduces compliance surface</li>
+              <li>Per-user conversation storage keyed by <code>userId</code> (stable across session restarts) with session-level <code>sessionId</code> - designed to survive BLE drops and phone lock screen kills without losing conversation context</li>
+              <li>Question intent detection on incoming transcription, followed by LLM retrieval call with accumulated transcript as context - answer delivered back through glasses speakers via TTS</li>
+              <li>Audio queue with rate limiting and new-detection diffing so spoken responses don't overlap or interrupt the user's ongoing speech</li>
+            </ul>
+          </div>
+
+          <div class="eng-callout">
+            <div class="eng-callout-label">JL Allwinner — Kotlin / Android companion app</div>
+            <ul>
+              <li>Android companion app connecting to JL Allwinner glasses over BLE GATT for commands and WiFi Direct for media transfer - two separate transport layers that have to be sequenced correctly</li>
+              <li>All hardware commands go through <code>LargeDataHandler.glassesControl(byteArray)</code> - photo trigger, audio start/stop, AI recognition — with responses parsed via <code>GlassModelControlResponse.getWorkTypeIng()</code> to track glasses state</li>
+              <li>Connection lifecycle gated on <code>onServiceDiscovered()</code> before any <code>LargeDataHandler</code> calls are allowed - a common silent failure point when commands are issued too early in the BLE handshake</li>
+              <li>WiFi Direct credential handshake: glasses push SSID and password to the phone over BLE, stored in <code>DeviceManager</code>, then <code>GlassesControl.importAlbum()</code> uses them to pull media files - the two transports coordinate through this shared state</li>
+              <li>PCM voice streaming via <code>GlassesControl.receiveOpusData()</code> with Opus/Speex native codec decoding - audio data decoded on the phone and forwarded to the AI pipeline for processing</li>
+            </ul>
+          </div>
+
+          <div class="project-tech-list">
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">MentraOS SDK</span>
+            <span class="tech-pill">Mentra Live</span>
+            <span class="tech-pill">Kotlin</span>
+            <span class="tech-pill">Android</span>
+            <span class="tech-pill">BLE GATT</span>
+            <span class="tech-pill">WiFi Direct</span>
+            <span class="tech-pill">JL Allwinner SDK</span>
+            <span class="tech-pill">OpenAI API</span>
+            <span class="tech-pill">Node.js</span>
+          </div>
+          <div class="project-metrics">
+            <div class="metric-item">
+              <span class="metric-val">2</span>
+              <span class="metric-label">hardware platforms</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">Audio-first</span>
+              <span class="metric-label">no-display interaction model</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">In progress</span>
+              <span class="metric-label">active development</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Driving Simulator -->
+      <div class="project-item" id="driving-sim">
+        <div class="project-media"><div class="media media-cover"><strong>270°</strong><span>Triple-screen simulator</span></div></div>
+        <div class="project-info">
+          <div class="project-num">// PROJECT_06</div>
+          <h3>Immersive Driving Simulator</h3>
+          <span class="project-status status-research">Completed · EECS XR Lab</span>
+          <p class="project-desc">
+            A 270-degree triple-screen driving simulator I set up for the OSU EECS XR Lab. The tricky part was getting the spatial calibration right across three displays so the visual field matched what a driver would actually see — and wiring up physical pedal hardware so the input felt connected to the simulation.
+          </p>
+
+          <div class="eng-callout">
+            <div class="eng-callout-label">What I actually built</div>
+            <ul>
+              <li>270° triple-screen spatial calibration: aligned camera frustum parameters and screen offsets across all three displays to remove seams and match real-vehicle peripheral visual field</li>
+              <li>Physical-to-virtual hardware integration: wired driving pedal inputs to the Unity vehicle controller and verified zero-lag physical-virtual response through structured test driving</li>
+              <li>Custom city and vehicle model import pipeline with LOD configuration for consistent frame rate across varied scene geometry</li>
+              <li>Ran a pre-deployment validation protocol to confirm spatial coherence and input response before the simulator went into lab use</li>
+            </ul>
+          </div>
+
+          <div class="project-tech-list">
+            <span class="tech-pill">Unity 3D</span>
+            <span class="tech-pill">C#</span>
+            <span class="tech-pill">Hardware Integration</span>
+            <span class="tech-pill">Multi-screen Calibration</span>
+            <span class="tech-pill">Custom City Models</span>
+          </div>
+          <div class="project-metrics">
+            <div class="metric-item">
+              <span class="metric-val">270°</span>
+              <span class="metric-label">immersive display coverage</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">Physical</span>
+              <span class="metric-label">pedal hardware integration</span>
+            </div>
+            <div class="metric-item">
+              <span class="metric-val">Validated</span>
+              <span class="metric-label">spatial calibration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research -->
+    <section class="block block-alt" id="research">
+      <div class="wrap">
+        <div class="eyebrow">Academic work</div>
+        <h2 class="section-title">Research</h2>
+        <p class="section-sub">Thesis work on VR onboarding and immersive network visualization at OSU.</p>
+
+    <div class="research-grid">
+      <div class="research-card">
+        <div class="card-icon">📊</div>
+        <h4>Immersive Network Visualization</h4>
+        <p>I designed and built a modular onboarding system so non-expert users could actually work with the 3D graph tool without needing a tutorial from a domain expert. The system runs identically on HMD-VR and desktop by using thin platform-specific binders with a shared step model and timing — same logic, different scene wiring.</p>
+        <div class="highlight">Coroutine-driven tutorial runtime · Deterministic interaction gating · JSON export per-step timing</div>
+      </div>
+      <div class="research-card">
+        <div class="card-icon">🧪</div>
+        <h4>Mixed-Methods User Study</h4>
+        <p>Designed a counterbalanced within-subjects study comparing HMD-VR vs Desktop VR for graph analysis. Tasks were built from expert user feedback and the Brehmer–Munzner graph task taxonomy. I embedded NASA-TLX directly in the VR application so participants never had to remove the headset between task blocks - keeping the session flow intact.</p>
+        <div class="highlight">n=14 participants · SUS · UEQ · In-app NASA-TLX · Think-aloud protocol · IRB-approved</div>
+      </div>
+      <div class="research-card">
+        <div class="card-icon">⚡</div>
+        <h4>GPU Performance Engineering</h4>
+        <p>Tracked down and fixed a 2–3 second VR scene freeze at 10K+ nodes. The bottleneck wasn't the node count itself - it was synchronous VFX and shader initialization in <code>Start()</code>. I redesigned the loading pipeline to distribute instantiation across frames using coroutines, and added GPU instancing via <code>Graphics.DrawMeshInstanced</code> to cut draw calls.</p>
+        <div class="highlight">60+ FPS sustained on Quest hardware · No scene freeze · Draw call batching via MaterialPropertyBlock</div>
+      </div>
+      <div class="research-card">
+        <div class="card-icon">🔧</div>
+        <h4>CI/CD and Build Pipeline</h4>
+        <p>Containerized the Unity Linux build to run on Windows using Docker Desktop's WSL2 backend with WSLg graphics forwarding - this solved the OpenGL/GUI failures I kept hitting with a plain WSL-hosted Docker run. Multi-platform builds for Windows, Linux, and Quest shipped to customers on a weekly sprint cadence.</p>
+        <div class="highlight">Docker · Azure DevOps · GitHub Actions · 60% reduction in deployment time</div>
+      </div>
+    </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section class="block" id="experience">
+      <div class="wrap">
+        <div class="eyebrow">Background</div>
+        <h2 class="section-title">Experience</h2>
+        <p class="section-sub">Research, industry, and everything in between.</p>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-date">Dec 2023<br />- Mar 2026</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <h4>Graduate Research Assistant - Software Engineer</h4>
+          <div class="timeline-company">Oregon State University · Corvallis, OR</div>
+          <p>Led a team of 3 building a cross-platform 3D graph visualization system for HPC researchers. I owned the rendering pipeline, the tutorial and onboarding system, and the CI/CD setup for Windows, Linux, and Quest builds. Also designed and ran a formal IRB-approved user study using in-app NASA-TLX, SUS, and UEQ to evaluate usability across VR and desktop.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Apr 2025<br />- Jun 2025</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <h4>Graduate Teaching Assistant - CS 362 (Software Engineering)</h4>
+          <div class="timeline-company">Oregon State University · Corvallis, OR</div>
+          <p>Mentored 150+ students in automated testing, TDD, and CI/CD. Built reproducible test suites with Vitest and Playwright integrated into GitHub Actions, which cut grading latency by 70%.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">Nov 2020<br />- Aug 2023</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+          <h4>Systems Engineer</h4>
+          <div class="timeline-company">Tata Consultancy Services · Hyderabad, India</div>
+          <p>Built and maintained ETL pipelines in Python and SQL across 6+ enterprise data sources for 500+ internal stakeholders. Cut deployment errors by 40% by introducing CI/CD in Azure DevOps, and brought data refresh latency down from 20 minutes to under 5 through query optimization and indexing. Received two on-the-spot awards for delivery performance.</p>
+        </div>
+      </div>
+
+    </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="block block-alt" id="skills">
+      <div class="wrap">
+        <div class="eyebrow">Technical stack</div>
+        <h2 class="section-title">Skills</h2>
+        <p class="section-sub">Tools I use to ship real things.</p>
+
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-label">XR & Graphics</div>
+        <div class="skill-items">
+          <span class="skill-chip">Unity 3D</span>
+          <span class="skill-chip">Unreal Engine</span>
+          <span class="skill-chip">OpenXR</span>
+          <span class="skill-chip">Meta XR SDK</span>
+          <span class="skill-chip">GLSL</span>
+          <span class="skill-chip">HLSL</span>
+          <span class="skill-chip">GPU Instancing</span>
+          <span class="skill-chip">Frame Pacing</span>
+          <span class="skill-chip">Unity Profiler</span>
+          <span class="skill-chip">RenderDoc</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">Smart Glasses</div>
+        <div class="skill-items">
+          <span class="skill-chip">MentraOS SDK</span>
+          <span class="skill-chip">Mentra Live</span>
+          <span class="skill-chip">JL Allwinner SDK</span>
+          <span class="skill-chip">AugmentOS</span>
+          <span class="skill-chip">BLE GATT</span>
+          <span class="skill-chip">WiFi Direct</span>
+          <span class="skill-chip">Audio-first UX</span>
+          <span class="skill-chip">TypeScript</span>
+          <span class="skill-chip">Kotlin</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">Languages</div>
+        <div class="skill-items">
+          <span class="skill-chip">C# (4 yrs)</span>
+          <span class="skill-chip">C++</span>
+          <span class="skill-chip">Python (3 yrs)</span>
+          <span class="skill-chip">SQL</span>
+          <span class="skill-chip">JavaScript</span>
+          <span class="skill-chip">TypeScript</span>
+          <span class="skill-chip">GLSL / HLSL</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">AI & Computer Vision</div>
+        <div class="skill-items">
+          <span class="skill-chip">OpenAI API</span>
+          <span class="skill-chip">YOLOv8</span>
+          <span class="skill-chip">ONNX Runtime</span>
+          <span class="skill-chip">Unity Sentis</span>
+          <span class="skill-chip">Wit.ai NLP</span>
+          <span class="skill-chip">On-device Inference</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">DevOps & Cloud</div>
+        <div class="skill-items">
+          <span class="skill-chip">Docker</span>
+          <span class="skill-chip">Azure DevOps</span>
+          <span class="skill-chip">GitHub Actions</span>
+          <span class="skill-chip">CI/CD</span>
+          <span class="skill-chip">Azure Data Factory</span>
+          <span class="skill-chip">WSL2 / Linux</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">Backend & Data</div>
+        <div class="skill-items">
+          <span class="skill-chip">REST APIs</span>
+          <span class="skill-chip">PostgreSQL</span>
+          <span class="skill-chip">SQL Server</span>
+          <span class="skill-chip">Node.js</span>
+          <span class="skill-chip">Async programming</span>
+          <span class="skill-chip">ETL Pipelines</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-label">Methods & Practices</div>
+        <div class="skill-items">
+          <span class="skill-chip">Agile / Scrum</span>
+          <span class="skill-chip">TDD</span>
+          <span class="skill-chip">Performance Profiling</span>
+          <span class="skill-chip">User Studies (SUS/UEQ/NASA-TLX)</span>
+          <span class="skill-chip">Technical Writing</span>
+          <span class="skill-chip">IRB Research Protocol</span>
+        </div>
+      </div>
+    </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="block contact" id="contact">
+      <div class="wrap">
+        <div class="eyebrow">Get in touch</div>
+        <h2 class="section-title">Let's talk</h2>
+        <p class="section-sub">Open to SWE and XR engineering roles. If you're working on something interesting in real-time 3D, AR/VR, or spatial computing, I'd like to hear about it.</p>
+        <div class="contact-links">
+          <a href="mailto:nithish.bhoomannagari@gmail.com" class="btn btn-primary">Email me</a>
+          <a href="https://www.linkedin.com/in/nithish-reddy-bhoomannagari-387b08159/" class="btn btn-outline" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/Nishureddy99" class="btn btn-outline" target="_blank" rel="noopener">GitHub</a>
+          <a href="Nithish_Reddy_Resume_SE.pdf" class="btn btn-outline" target="_blank" rel="noopener">Resume</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>Nithish Reddy Bhoomannagari · XR Developer</span>
+      <span>Corvallis, OR · Open to relocation</span>
+    </div>
+  </footer>
+
+  <script>
+    // Load the YouTube player only when someone clicks a thumbnail.
+    document.querySelectorAll('button.yt').forEach(function (thumb) {
+      thumb.addEventListener('click', function () {
+        var holder = document.createElement('div');
+        holder.className = 'media';
+        var player = document.createElement('iframe');
+        player.src = 'https://www.youtube-nocookie.com/embed/' + thumb.dataset.yt + '?autoplay=1&rel=0';
+        player.title = thumb.dataset.title || 'Project video';
+        player.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        player.allowFullscreen = true;
+        holder.appendChild(player);
+        thumb.replaceWith(holder);
+      });
+    });
+  </script>
+
+</body>
+</html>
